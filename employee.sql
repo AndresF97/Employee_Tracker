@@ -8,11 +8,27 @@ CREATE TABLE departments(
     name VARCHAR(30), 
     PRIMARY KEY(id)
 );
+INSERT INTO departments(name)
+VALUES("Andres");
 
 CREATE TABLE roles(
     id INTEGER NOT NULL AUTO_INCREMENT,
     title VARCHAR(30),
-    salary DECIMAL(18,4),
-    department_id INTEGER NOT NULL AUTO_INCREMENT,
+    salary DECIMAL(18,2),
+    department_id INTEGER(11),
     PRIMARY KEY(id)
 );
+INSERT INTO roles(title,salary,department_id)
+VALUES("Manager",100.00,1);
+
+CREATE TABLE employee(
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    first_name VARCHAR(30),
+    last_name VARCHAR(30),
+    role_id INTEGER(11),
+    manager_id INTEGER(11),
+    PRIMARY KEY(id)
+
+);
+INSERT INTO employee(first_name,last_name)
+VALUES("Jackie","kackier")
