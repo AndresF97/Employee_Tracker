@@ -3,16 +3,27 @@ CREATE DATABASE employee_db;
 USE employee_db;
 
 
+CREATE TABLE Orders (
+    OrderID int NOT NULL,
+    OrderNumber int NOT NULL,
+    PersonID int,
+    PRIMARY KEY (OrderID),
+    FOREIGN KEY (PersonID) REFERENCES Persons(PersonID)
+);
+
 CREATE TABLE departments(
     id INTEGER  NOT NULL AUTO_INCREMENT,
     name VARCHAR(30), 
-    PRIMARY KEY(id)
+    PRIMARY KEY(id),
+    FOREIGN KEY (role_id) REFERENCES roles(id)
+    FOREIGN KEY (manager_id) REFERENCES ()
 );
 INSERT INTO departments(name)
 VALUES("Andres");
 
 CREATE TABLE roles(
     id INTEGER NOT NULL AUTO_INCREMENT,
+    role_id
     title VARCHAR(30),
     salary DECIMAL(18,2),
     department_id INTEGER(11),
