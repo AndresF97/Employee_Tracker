@@ -55,17 +55,35 @@ function addEmployee(){
         },{
             type:"input",
             message:"whats the employees' last name?",
-            name:"last_name" 
+            name:"last_name"
         },{
             type:"list",
             message:"whats role will your employee hold?",
             choices:["Sales Lead","Sales Person","Lead Edngineer","Software Engineer","Account Manager","Account","Legal Team lead","Lawyer"],
-            name:"role" 
+            name:"role"
         }
-    ])
+    ]).then(answer =>{
+        addName(answer)
+        
+
+
+    })
 }
 
-
+function addName(data){
+    connection.query('INSERT INTO employee SET ?',{first_name:data.first_name,last_name:data.last_name},function(err){
+        if(err) throw err
+        console.log("Your Employee was added")
+        addRole(data.role)
+    })
+}
+function addRole(data){
+    connection.query("INSERT INTO roles Set?",{title: data},function(err){
+        if(err) throw err;
+        console.log("and the role was set")
+        promptUser()
+    })
+}
 // function writeDepartments(){
 //     connection.query("SELECT * FROM departments",(err,res) =>{
 //         if(err) throw err
