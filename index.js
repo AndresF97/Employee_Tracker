@@ -1,7 +1,8 @@
 const mysql = require("mysql")
 const inquirer = require("inquirer")
 const cTable = require("console.table")
-
+let money;
+let department;
 var connection = mysql.createConnection({
     host:"localhost",
     port:3306,
@@ -52,11 +53,6 @@ const promptUser = ()=>{
 function addEmployee(){
     connection.query("SELECT * FROM  roles",function(err,res){
         if(err) throw err
-        var choices = []
-        res.forEach(item => {
-            choices.push[{tilte : item.title}]
-            
-        });
     inquirer.prompt([
         {
             type:"input",
@@ -69,12 +65,21 @@ function addEmployee(){
         },{
             name:"role",
             type:"list",
-            choices: choices,
+            choices: function(){
+                var choiceArray = []
+                
+                for(var i = 0; i < res.length;i++){
+                    choiceArray.push(res[i].title)
+                }
+                return choiceArray
+            },
             message:"whats role will your employee hold?"
         }
 
     ]).then(answer =>{
         addName(answer)
+        addRole(answer.role);
+        
         
 
 
@@ -86,16 +91,22 @@ function addName(data){
     connection.query('INSERT INTO employee SET ?',{first_name:data.first_name,last_name:data.last_name},function(err){
         if(err) throw err
         console.log("Your Employee was added")
-        addRole(data.role)
+
     })
 }
 function addRole(data){
-    connection.query("INSERT INTO roles Set?",{title: data},function(err){
-        if(err) throw err;
-        console.log("and the role was set")
+    connection.query("SELECT * FROM roles",function(err,result){
+        if(err) throw err
+        for(var i =0; i < result.length;i++){
+            if(data === result[i].title){
+                money = reusult[i].salary
+                department = result[i].department_id
+            }
+        }
+            
+        }); 
         promptUser()
-    })
-}
-function selectJob(){
-    connection.query
+    }
+function selectJob(data){
+    return data
 }
