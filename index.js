@@ -33,6 +33,9 @@ const promptUser = ()=>{
 
         }else if( answer.action === "View All Employes" ){
             //view employes by department but with inquirer option to bring by department
+            writeEmployee();
+            // writeRoles();
+            // writeDepartments()
 
         }else if (answer.action === "Update Employee role"){
         //viewing employees by manager but wth an inquirer prompt depending on the manager
@@ -47,6 +50,13 @@ const promptUser = ()=>{
 }
 
 function addEmployee(){
+    connection.query("SELECT * FROM  roles",function(err,res){
+        if(err) throw err
+        var choices = []
+        res.forEach(item => {
+            choices.push[{tilte : item.title}]
+            
+        });
     inquirer.prompt([
         {
             type:"input",
@@ -57,16 +67,18 @@ function addEmployee(){
             message:"whats the employees' last name?",
             name:"last_name"
         },{
+            name:"role",
             type:"list",
-            message:"whats role will your employee hold?",
-            choices:["Sales Lead","Sales Person","Lead Edngineer","Software Engineer","Account Manager","Account","Legal Team lead","Lawyer"],
-            name:"role"
+            choices: choices,
+            message:"whats role will your employee hold?"
         }
+
     ]).then(answer =>{
         addName(answer)
         
 
 
+        })
     })
 }
 
@@ -84,23 +96,6 @@ function addRole(data){
         promptUser()
     })
 }
-// function writeDepartments(){
-//     connection.query("SELECT * FROM departments",(err,res) =>{
-//         if(err) throw err
-//         console.table(res)
-//     })
-// }
-
-// function writeRoles(){
-//     connection.query("SELECT * FROM roles",(err,res) =>{
-//         if(err) throw err;
-//         console.table(res)
-//     })
-
-// }
-// function writeEmployee(){
-//     connection.query("SELECT* FROM roles",(err,res)=>{
-//         if(err) throw err;
-//         console.table(res)
-//     })
-// }
+function selectJob(){
+    connection.query
+}

@@ -17,7 +17,7 @@ CREATE TABLE departments(
     PRIMARY KEY(id)
 );
 INSERT INTO departments(name)
-VALUES("Andres");
+VALUES("Sales"),("Engineering"),("Finanacial"),("Legal");
 
 CREATE TABLE roles(
     id INTEGER NOT NULL AUTO_INCREMENT,
@@ -27,7 +27,7 @@ CREATE TABLE roles(
     PRIMARY KEY(id)
 );
 INSERT INTO roles(title,salary,department_id)
-VALUES("Manager",100.00,1);
+VALUES("Sales Lead",25000.00,1),("Sales Person",10000.00,1)("Lead Engineer",1000000.00,2),("Software engineer",100000.00,2),("Accountant Manager",100000,3),("Accountant",5000.00,3),("Legal Team lead",100000.00,4),("Lawyer",10000.00,4);
 
 CREATE TABLE employee(
     num INTEGER NOT NULL AUTO_INCREMENT,
@@ -38,5 +38,7 @@ CREATE TABLE employee(
     PRIMARY KEY(num),
 
 );
-INSERT INTO employee(first_name,last_name)
-VALUES("Jackie","kackier")
+INSERT INTO employee(first_name,last_name,role_id,manager_id)
+VALUES("Jackie","kackier", 1, 1)
+
+
