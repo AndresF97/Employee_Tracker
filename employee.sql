@@ -3,13 +3,6 @@ CREATE DATABASE employee_db;
 USE employee_db;
 
 
-CREATE TABLE Orders (
-    OrderID int NOT NULL,
-    OrderNumber int NOT NULL,
-    PersonID int,
-    PRIMARY KEY (OrderID),
-    FOREIGN KEY (PersonID) REFERENCES Persons(PersonID)
-);
 
 CREATE TABLE departments(
     id INTEGER  NOT NULL AUTO_INCREMENT,
@@ -34,11 +27,10 @@ CREATE TABLE employee(
     first_name VARCHAR(30),
     last_name VARCHAR(30),
     role_id INTEGER REFERENCES roles(id),
-    manager_id INTEGER REFERENCES departments(id),
     PRIMARY KEY(num)
 
 );
-INSERT INTO employee(first_name,last_name,role_id,manager_id)
-VALUES("Jackie","kackier", 1, 1)
+INSERT INTO employee(first_name,last_name,role_id)
+VALUES("Jackie","kackier", 1)
 
 

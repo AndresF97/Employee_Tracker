@@ -1,8 +1,7 @@
 const mysql = require("mysql")
 const inquirer = require("inquirer")
 const cTable = require("console.table")
-let money;
-let department;
+let position;
 var connection = mysql.createConnection({
     host:"localhost",
     port:3306,
@@ -14,9 +13,6 @@ var connection = mysql.createConnection({
 connection.connect((err)=>{
     if(err) throw err
     console.log("connected as id "+connection.threadId)
-    // writeDepartments()
-    // writeRoles()
-    // writeEmployee()
     promptUser()
 });
 const promptUser = ()=>{
@@ -78,7 +74,6 @@ function addEmployee(){
 
     ]).then(answer =>{
         addName(answer)
-        addRole(answer.role);
         
         
 
@@ -86,11 +81,11 @@ function addEmployee(){
         })
     })
 }
-
 function addName(data){
     connection.query('INSERT INTO employee SET ?',{first_name:data.first_name,last_name:data.last_name},function(err){
         if(err) throw err
         console.log("Your Employee was added")
+        addRole(data);
 
     })
 }
@@ -98,15 +93,15 @@ function addRole(data){
     connection.query("SELECT * FROM roles",function(err,result){
         if(err) throw err
         for(var i =0; i < result.length;i++){
-            if(data === result[i].title){
-                money = reusult[i].salary
-                department = result[i].department_id
+            if(data.role === result[i].title){
+                position = result[i].id
             }
         }
+        connection.query("SELECT * FROM employee",function(err,res){
+            for(var i =0; i < res.length;i++){
+                    res[i].role_id = parseInt(position)     
+            }
+        })
             
-        }); 
-        promptUser()
+        }); promptUser()
     }
-function selectJob(data){
-    return data
-}
