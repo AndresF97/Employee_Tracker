@@ -85,7 +85,7 @@ function addName(data) {
 }
 
 function writeAll(){
-    connection.query('SELECT * FROM employee LEFT JOIN roles ON employee.role_id = roles.id',(err,res) =>{
+    connection.query('SELECT * FROM employee LEFT JOIN roles ON employee.role_id = roles.id INNER JOIN departments ON roles.department_id = departments.id',(err,res) =>{
         if(err) throw err
         console.log("\n")
         console.table(res)

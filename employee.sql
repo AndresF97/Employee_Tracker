@@ -16,8 +16,10 @@ CREATE TABLE roles(
     id INTEGER NOT NULL AUTO_INCREMENT,
     title VARCHAR(30),
     salary DECIMAL(18,2),
-    department_id INTEGER REFERENCES departments(id),
-    PRIMARY KEY(id)
+    department_id INTEGER NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY (department_id) REFERENCES departments(id) 
+
 );
 INSERT INTO roles(title,salary,department_id)
 VALUES("Sales Lead",25000.00,1),("Sales Person",10000.00,1),("Lead Engineer",1000000.00,2),("Software engineer",100000.00,2),("Accountant Manager",100000,3),("Accountant",5000.00,3),("Legal Team lead",100000.00,4),("Lawyer",10000.00,4);
