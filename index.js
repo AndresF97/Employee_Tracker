@@ -20,7 +20,7 @@ const promptUser = () => {
         {
             type: "list",
             message: "what would you like to do?",
-            choices: ["Add Employee", "View All Employess", "Update Employee role", "Done"],
+            choices: ["Add Employee", "View All Employees", "Update Employee role", "Done"],
             name: "action"
         }
     ]).then(answer => {
@@ -28,9 +28,9 @@ const promptUser = () => {
             ///Should add info to sq file
             addEmployee()
 
-        } else if (answer.action === "View All Employes") {
+        } else if (answer.action === "View All Employees") {
             //view employes by department but with inquirer option to bring by department
-            writeEmployee();
+            writeAll();
             
 
         } else if (answer.action === "Update Employee role") {
@@ -84,4 +84,12 @@ function addName(data) {
     promptUser()
 }
 
-// function()
+function writeAll(){
+    connection.query('SELECT * FROM employee LEFT JOIN roles ON employee.role_id = roles.id',(err,res) =>{
+        if(err) throw err
+        console.log("\n")
+        console.table(res)
+        console.log("\n")
+    })
+    promptUser()
+}
