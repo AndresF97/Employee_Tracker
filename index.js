@@ -2,6 +2,7 @@ const mysql = require("mysql")
 const inquirer = require("inquirer")
 const cTable = require("console.table")
 const logo = require('asciiart-logo');
+
 console.log(logo({
     name:"Employee tracker",
     font:"Big Money-ne",
