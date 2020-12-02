@@ -1,6 +1,18 @@
 const mysql = require("mysql")
 const inquirer = require("inquirer")
 const cTable = require("console.table")
+const logo = require('asciiart-logo');
+console.log(logo({
+    name:"Employee tracker",
+    font:"Big Money-ne",
+    lineChars:10,
+    padding:2,
+    margin:2,
+    borderColor: 'grey',
+    logoColor: 'bold-green',
+    textColor: 'green',
+}).render());
+
 var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
@@ -77,6 +89,7 @@ function addEmployee() {
     })
 }
 function addName(data) {
+    console.log(data)
     connection.query('INSERT INTO employee SET ?', { first_name: data.first_name, last_name: data.last_name,role_id:data.role.split("")[0]}, function (err) {
         if (err) throw err
         console.log("Your Employee was added")
