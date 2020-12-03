@@ -1,33 +1,23 @@
-const mysql = require("mysql")
 const inquirer = require("inquirer")
 const cTable = require("console.table")
 const logo = require('asciiart-logo');
-
-console.log(logo({
-    name:"Employee tracker",
-    font:"Big Money-ne",
-    lineChars:10,
-    padding:2,
-    margin:2,
-    borderColor: 'grey',
-    logoColor: 'bold-green',
-    textColor: 'green',
-}).render());
-
-var connection = mysql.createConnection({
-    host: "localhost",
-    port: 3306,
-    user: "root",
-    password: "password",
-    database: "employee_db"
-});
+const Call = require("./assets/connections/userRes")
 
 
-connection.connect((err) => {
-    if (err) throw err
-    console.log("connected as id " + connection.threadId)
+function start(){
+    console.log(logo({
+        name:"Employee tracker",
+        font:"Big Money-ne",
+        lineChars:10,
+        padding:2,
+        margin:2,
+        borderColor: 'grey',
+        logoColor: 'bold-green',
+        textColor: 'green',
+    }).render());
     promptUser()
-});
+}
+
 const promptUser = () => {
     inquirer.prompt([
         {
@@ -98,12 +88,13 @@ function addName(data) {
     promptUser()
 }
 
-function writeAll(){
-    connection.query('SELECT * FROM employee LEFT JOIN roles ON employee.role_id = roles.id INNER JOIN departments ON roles.department_id = departments.id',(err,res) =>{
-        if(err) throw err
-        console.log("\n")
-        console.table(res)
-        console.log("\n")
-    })
+async function writeAll(){
+    const employees = await Call.allEmployees();
+    console.log("\n");
+    console.table(employees)
     promptUser()
 }
+
+
+
+start();
