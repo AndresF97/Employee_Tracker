@@ -56,12 +56,14 @@ const promptUser = () => {
             return AddNewDepartment();
         } else if (answer.action === "Remove Department") {
             //REMOVE DEPARTMENT
-            return deleteDepartment()
-        }else if (answer.action === "View All Employess by Manager") {
+            return deleteDepartment();
+        }else if (answer.action === "View All Employees by Manager") {
             //VIEW ALL EMPLOYEES BY MANAGER
+            return viewAllByManager();
         }
          else if (answer.action === "Update Employee role") {
             //UPDATE EMPLOYEE ROLE
+            return updateRole()
         }
          else if (answer.action === "Done") {
             console.log("Well Done!")
@@ -179,5 +181,32 @@ async function deleteDepartment(){
 
     promptUser();
 }
+
+async function viewAllByManager(){
+    console.log("Manager")
+    const managers = await Call.allEmployees();
+    const managerChoices = managers.map(({id,first_name,last_name})=>({
+        name:`${first_name} ${last_name}`,
+        value:id
+    }));
+    const { choosen } =  await inquirer.prompt([
+        {
+            type:"list",
+            name:"choosen",
+            message:"Which department manager do you want to see?",
+            choices: managerChoices
+        }
+    ])
+    const employee = await Call.findAllEmployeesByManager(choosen)
+    console.log('\n')
+    if(employee.length === 0 ){
+        console.log("Sorry this person is not a manager.")
+        promptUser()
+    }else{
+        console.table(employee)
+        promptUser();
+    }
+}
+
 
 start();

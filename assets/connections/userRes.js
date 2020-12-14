@@ -50,7 +50,8 @@ class Call {
         return this.connection.query("SELECT employee.id, employee.first_name,employee.last_name, departments.name AS departments, roles.title FROM employee LEFT JOIN roles on employee.roles_id = roles.id LEFT JOIN departments on roles.department_id = departments.id WHERE departments.id  = ?;",departmentsId)
     }
     findAllEmployeesByManager(managerId){
-        return this.connection.query("SELECT employee.id, employee.first_name, employee.last_name, departments.name AS departments, roles.title FROM employee LEFT JOIN roles on roles.id = employee.role_id LEFT JOIN departments ON departments.id = roles.department_id WHERE manager_id = ?;",managerId)
+        console.log(managerId)
+        return this.connection.query("SELECT employee.id, employee.first_name, employee.last_name, departments.name AS departments, roles.title FROM employee LEFT JOIN roles on roles.id = employee.roles_id LEFT JOIN departments ON departments.id = roles.department_id WHERE manager_id = ?;",managerId)
     }
 };
 
