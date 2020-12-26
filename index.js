@@ -207,6 +207,37 @@ async function viewAllByManager(){
         promptUser();
     }
 }
-
+async function updateRole(){
+    const employeeList= await Call.allEmployees()
+    const role = await Call.findallRoles();
+    const choices = employeeList.map(({id, first_name,last_name})=>({
+        name:`${first_name} ${last_name}`,
+        id:id
+        })
+    )
+    const {updateId} = await inquirer.prompt([
+        {
+            type:"list",
+            name:"updatedId",
+            message:"Which employees' Role do ypou want to update?",
+            choices:choices
+        }
+    ])
+    const rolesChoices = role.map(({id, title})=>({
+        name:title,
+        value:id
+    }))
+    const {roleId} = await inquirer.prompt([
+        {
+            type:"list",
+            name:"roleId",
+            message:"Which new role would you like to choose?",
+            choices:rolesChoices
+        }
+    ])
+    await Call.updateEmployee(updateId,roleId)
+    console.log("Role was updated!")
+    promptUser();
+}
 
 start();

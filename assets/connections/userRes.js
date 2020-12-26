@@ -22,7 +22,7 @@ class Call {
 
     }
     updateEmployee(id,roleId){
-        return this.connection.query("UPDATE emplyee SET roles_id= ? WHERE id = ?",[roleId, id]);
+        return this.connection.query("UPDATE employee SET roles_id= ? WHERE id = ?",[roleId, id]);
     }
     updateEmployeeByManager(employeeId,managerId){
         return this.connection.query("UPDATE employee SET manager_id = ? WHERE id = ?",[managerId,employeeId])
