@@ -65,6 +65,10 @@ const promptUser = () => {
             //UPDATE EMPLOYEE ROLE
             return updateRole()
         }
+        else if(answer.action === "Add Role"){
+            //ADD ROLE
+            return addsRole();
+        }
          else if (answer.action === "Done") {
             console.log("Well Done!")
             process.exit()
@@ -98,6 +102,7 @@ async function addName() {
         message:"Whast the employee position?",
         choices: roleChoices
     });
+    console.log(roleChoices)
     promptName.roles_id = roleId;
 
     const managerChoice = employees.map(({id, first_name, last_name})=>({
@@ -116,7 +121,17 @@ async function addName() {
     console.log(`"${promptName.first_name} ${promptName.last_name}" was added to your employee list.`)
     promptUser();
 }
+async function addsRole(){
+    console.log("adds new role")
+    const promptNewRoles = await inquire.prompt([
+        {
+            message:"Whats the new Role called?",
+            name:"newRole",
+        }
+    ])
 
+    promptUser()
+}
 async function writeAll(){
     const employees = await Call.allEmployees();
     console.log("\n");
