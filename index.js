@@ -92,8 +92,8 @@ async function addName() {
             message:"Employee last name?"
         }
     ]);
-    const roleChoices = roles.map(({id, position})=>({
-        name: position,
+    const roleChoices = roles.map(({id, title})=>({
+        name: title,
         value: id
     }));
     const {roleId} = await inquirer.prompt({
