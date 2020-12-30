@@ -1,7 +1,8 @@
 const inquirer = require("inquirer")
 const cTable = require("console.table")
 const logo = require('asciiart-logo');
-const Call = require("./assets/connections/userRes")
+const Call = require("./assets/connections/userRes");
+const { connect } = require("./assets/connections/connection");
 
 
 function start(){
@@ -57,7 +58,11 @@ const promptUser = () => {
         } else if (answer.action === "Remove Department") {
             //REMOVE DEPARTMENT
             return deleteDepartment();
-        }else if (answer.action === "View All Employees by Manager") {
+        }else if(answer.action === "Remove Employee"){
+            //REMOVE EMPLOYEE
+            return deleteEmployee();
+        }
+        else if (answer.action === "View All Employees by Manager") {
             //VIEW ALL EMPLOYEES BY MANAGER
             return viewAllByManager();
         }
@@ -122,16 +127,45 @@ async function addName() {
     promptUser();
 }
 async function addsRole(){
-    console.log("adds new role")
-    const promptNewRoles = await inquire.prompt([
+    const allDepartments = await Call.findAllDepeartmets()
+    const departmentChoice = allDepartments.map(({id, name}) =>({
+        name: name,
+        value:id
+    }));
+    const promptNewRoles = await inquirer.prompt([
         {
             message:"Whats the new Role called?",
-            name:"newRole",
+            name:"title",
+        },
+        {
+            message:"How much would the employee make while wokring on that role?",
+            name:"salary"
+        },{
+            type:"list",
+            message:"What department will the role belong to?",
+            name:"department_id",
+            choices:departmentChoice
         }
     ])
-
+    await Call.createRole(promptNewRoles)
+    console.log("\n")
+    console.log(`You have added '${promptNewRoles.title}' as a new Role!`)
     promptUser()
 }
+
+async function deleteEmployee(){
+    const allEmployees = Call.allEmployees();
+    const choosedeleteEmployee = await inquirer.prompt([
+        {
+            type:"list",
+            message:"Chooose a employee to delete:",
+            name:"selectedEmployee",
+            choosen:EmplpoyeeList
+        }
+    ])
+    console.log(`${choosedeleteEmployee.selectedEmployee}, has been deleted.`)
+}
+
 async function writeAll(){
     const employees = await Call.allEmployees();
     console.log("\n");
